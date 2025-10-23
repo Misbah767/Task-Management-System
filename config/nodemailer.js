@@ -18,8 +18,8 @@ const transporter = nodemailer.createTransport({
 
 // ----------------- VERIFY CONNECTION -----------------
 transporter.verify((err, success) => {
-  if (err) console.error("❌ SMTP Connection Error:", err.message);
-  else console.log("✅ SMTP Connected Successfully");
+  if (err) console.error("SMTP Connection Error:", err.message);
+  else console.log("SMTP Connected Successfully");
 });
 
 /**
@@ -30,56 +30,70 @@ transporter.verify((err, success) => {
  * @param {object} data - { name, otp }
  * @param {boolean} forceSend - if true, send real email even in development
  */
-export async function sendEmail(to, subject, type, data = {}, forceSend = false) {
+export async function sendEmail(
+  to,
+  subject,
+  type,
+  data = {},
+  forceSend = false
+) {
   try {
     let content = "";
 
-    if (type === "otp") {
-      content = `
-        <p>👋 Hey ${data.name || "User"},</p>
-        <p>Here’s your one-time password (OTP) to verify your email:</p>
-        <h1 style="text-align:center; background:#1a73e8; color:white; padding:15px; border-radius:8px;">
-          ${data.otp}
-        </h1>
-        <p style="text-align:center;">⏳ This OTP will expire in <b>10 minutes</b>.</p>
-      `;
-    }
+    switch (type) {
+      case "otp":
+        content = `
+          <p>Hi ${data.name || "User"},</p>
+          <p>Your one-time password (OTP) to verify your account is:</p>
+          <h2 style="text-align:center; background:#1a73e8; color:white; padding:15px; border-radius:8px;">
+            ${data.otp}
+          </h2>
+          <p style="text-align:center; font-size:14px; color:#555;">This OTP will expire in <b>10 minutes</b>.</p>
+        `;
+        break;
 
-    if (type === "verified") {
-      content = `
-        <p>🎉 Congratulations ${data.name || "User"}!</p>
-        <p>Your account has been <b>successfully verified</b>.</p>
-        <p>You can now login and enjoy using <b>Misbah App</b>.</p>
-      `;
-    }
+      case "verified":
+        content = `
+          <p>Hi ${data.name || "User"},</p>
+          <p>Your Taskify account has been successfully verified ✅</p>
+          <p>You can now login and start managing your tasks efficiently.</p>
+        `;
+        break;
 
-    if (type === "reset") {
-      content = `
-        <p>🔒 Hi ${data.name || "User"},</p>
-        <p>You requested a password reset. Use the OTP below to continue:</p>
-        <h1 style="text-align:center; background:#e53935; color:white; padding:15px; border-radius:8px;">
-          ${data.otp}
-        </h1>
-        <p style="text-align:center;">⚠️ Expires in <b>10 minutes</b>.</p>
-      `;
-    }
+      case "reset":
+        content = `
+          <p>Hi ${data.name || "User"},</p>
+          <p>You requested a password reset. Use the OTP below:</p>
+          <h2 style="text-align:center; background:#e53935; color:white; padding:15px; border-radius:8px;">
+            ${data.otp}
+          </h2>
+          <p style="text-align:center; font-size:14px; color:#555;">This OTP will expire in <b>10 minutes</b>.</p>
+        `;
+        break;
 
-    if (type === "passwordChanged") {
-      content = `
-        <p>🔐 Hello ${data.name || "User"},</p>
-        <p>Your password has been <b>successfully changed</b>.</p>
-        <p>If this wasn’t you, please reset your password immediately or contact support.</p>
-        <p>Stay safe,<br/>The Misbah App Team</p>
-      `;
+      case "passwordChanged":
+        content = `
+          <p>Hello ${data.name || "User"},</p>
+          <p>Your password has been successfully changed ✅</p>
+          <p>If this wasn’t you, please reset your password immediately or contact support.</p>
+        `;
+        break;
+
+      default:
+        content = `<p>Hello ${
+          data.name || "User"
+        },</p><p>This is a notification from Taskify ✅</p>`;
     }
 
     const html = `
-      <div style="font-family:Arial, sans-serif; max-width:600px; margin:auto; padding:25px; background:#fdfdfd; border-radius:12px; border:1px solid #eee; box-shadow:0px 3px 10px rgba(0,0,0,0.05);">
-        <h2 style="text-align:center; color:#1a73e8;">🌟 Misbah App</h2>
+      <div style="font-family:Arial, sans-serif; max-width:600px; margin:auto; padding:25px; background:#f8f8f8; border-radius:12px; border:1px solid #eee; box-shadow:0px 3px 10px rgba(0,0,0,0.05);">
+        <div style="text-align:center; margin-bottom:25px;">
+          <h2 style="margin-top:10px; color:#1a73e8; font-size:24px;">Taskify ✅</h2>
+        </div>
         ${content}
         <hr style="margin:30px 0; border:none; border-top:1px solid #eee;"/>
         <p style="font-size:12px; text-align:center; color:#888;">
-          Need help? 📩 Contact <a href="mailto:${process.env.SENDER_EMAIL}" style="color:#1a73e8;">support</a>
+          Need help? Contact <a href="mailto:${process.env.SENDER_EMAIL}" style="color:#1a73e8;">support</a>
         </p>
       </div>
     `;
@@ -92,7 +106,7 @@ export async function sendEmail(to, subject, type, data = {}, forceSend = false)
 
     // Real sending
     const info = await transporter.sendMail({
-      from: `"Misbah App" <${process.env.SENDER_EMAIL}>`,
+      from: `"Taskify" <${process.env.SENDER_EMAIL}>`,
       to,
       subject,
       html,
@@ -101,7 +115,7 @@ export async function sendEmail(to, subject, type, data = {}, forceSend = false)
     console.log(`✅ Email sent to ${to}: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error(`❌ Email failed to ${to}:`, error && error.message ? error.message : error);
-    throw new Error("Email send failed: " + (error && error.message ? error.message : ""));
+    console.error(`❌ Email failed to ${to}:`, error?.message || error);
+    throw new Error(`Email send failed: ${error?.message || ""}`);
   }
 }

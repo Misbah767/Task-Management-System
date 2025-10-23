@@ -1,20 +1,12 @@
-import {
-  registerService,
-  loginService,
-  verifyAccountOtpService,
-  forgotPasswordService,
-  verifyResetOtpService,
-  resetPasswordService,
-  refreshAccessTokenService,
-  resendAccountOtpService,
-  resendResetOtpService,
-} from "../services/authService.js"; // services file ka naam match karo
+import {registerService,loginService,verifyAccountOtpService,
+  forgotPasswordService,verifyResetOtpService,resetPasswordService,
+  refreshAccessTokenService,resendAccountOtpService,resendResetOtpService,} from "../services/authService.js"; 
 
 // ----------------- REGISTER -----------------
 export const registerUser = async (req, res) => {
   try {
     const result = await registerService(req.body);
-    res.status(201).json(result); // will include expiresAt
+    res.status(201).json(result); 
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -42,7 +34,7 @@ export const loginUser = async (req, res) => {
 export const resendAccountOtp = async (req, res) => {
   try {
     const result = await resendAccountOtpService(req.body);
-    res.status(200).json(result); // ✅ includes expiresAt
+    res.status(200).json(result); //  includes expiresAt
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -68,7 +60,7 @@ export const verifyAccountOtp = async (req, res) => {
 export const forgotPassword = async (req, res) => {
   try {
     const result = await forgotPasswordService(req.body);
-    res.status(200).json(result); // ✅ includes expiresAt
+    res.status(200).json(result); 
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -78,7 +70,7 @@ export const forgotPassword = async (req, res) => {
 export const resendResetOtp = async (req, res) => {
   try {
     const result = await resendResetOtpService(req.body);
-    res.status(200).json(result); // ✅ includes expiresAt
+    res.status(200).json(result); 
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

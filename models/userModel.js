@@ -1,3 +1,4 @@
+// models/userModel.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -7,13 +8,17 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, minlength: 6 },
     isAccountVerified: { type: Boolean, default: false },
 
-    verifyOtp: { type: String, default: null },
-    verifyOtpExpiredAt: { type: Date, default: null },
+    // OTP fields
+    verifyOtp: { type: String },
+    verifyOtpExpiredAt: { type: Date },
+    resetOtp: { type: String },
+    resetOtpExpiredAt: { type: Date },
 
-    resetOtp: { type: String, default: null },
-    resetOtpExpiredAt: { type: Date, default: null },
+    // Array of todos
+    todos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Todo" }],
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+export default User;

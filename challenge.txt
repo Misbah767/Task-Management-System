@@ -1,0 +1,86 @@
+ 1. express
+Express → Node.js ka framework hai jo server banane ke liye use hota hai.
+Iski help se hum HTTP requests handle karte hain (GET, POST, PUT, DELETE), routes b
+anate hain aur APIs create karte hain.
+ 2. cors
+CORS (Cross-Origin Resource Sharing) → Browser security ke rule ke mutabiq, agar frontend
+ aur backend alag domains par chal rahe ho (for example frontend: localhost:5173, backend: localhost:5000),
+  to browser unki communication block kar deta hai.
+Isliye hum CORS middleware use karte hain taake browser ko explicitly allow karein ke frontend aur 
+backend aapas mein communicate kar saken.
+Simple words mein, CORS browser ko permission deta hai ke wo backend se data send/receive kar sake.
+3.dotenv
+dotenv → .env file ke andar environment variables store karne ke liye use hota hai (jaise PORT, MONGO_URI,
+ CLIENT_URL etc.).
+Iska purpose hai sensitive information (like passwords, tokens) ko directly code ke andar likhne 
+ke bajaye secure jagah store karna.
+dotenv.config() lagane se ye variables automatically process.env ke andar load ho jaate hain, 
+jisse hum kahin bhi unhe use kar sakte hain.
+ Example:
+PORT=5000
+MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net
+CLIENT_URL=http://localhost:5173
+ 4.cookie-parser
+cookie-parser → Browser jab bhi server ko request bhejta hai to saath mein cookies bhi send karta hai
+ (jin mein JWT token ya session info hoti hai).
+Yeh middleware un cookies ko parse karta hai taake backend unhe
+ read aur verify kar sake — especially authentication ke purpose ke liye.
+Simple words mein, yeh cookies ko “readable” bana deta hai backend ke liye.
+ 5.connectDB
+connectDB → Ek custom function hai jo MongoDB ke saath connection establish karta hai.
+Yeh usually config/mongodb.js file ke andar likha hota hai jahan se database se connection banaya jata hai.
+Iska purpose hai backend aur database ke beech connection ready karna taake data store/read/update/delete ho sake.
+6. authRoutes & userRoutes
+authRoutes aur userRoutes dono alag route files hain.
+authRoutes → login, signup, logout, verify, etc. jaise authentication related APIs handle karta hai.
+userRoutes → user profile, update info, get all users, etc. jaise user-specific APIs handle karta hai.
+Yeh routes modular approach ke liye alag-alag rakhe gaye hain taake code organized aur maintainable rahe.
+
+🎯 Interview Answer: “JWT kaise kaam karta hai aur signature ka role kya hai?”
+
+JWT (JSON Web Token) ek secure string hota hai jo authentication ke liye use kiya jata hai.
+Ye teen parts me divide hota hai — Header, Payload, aur Signature.
+
+Header me token ka algorithm (jaise HS256) aur type store hota hai.
+
+Payload me user-related data hota hai, jaise userId, iat (issued at), aur exp (expiry).
+
+Signature token ka sabse important part hota hai. Ye ensure karta hai ke token tamper (modify) nahi hua.
+
+Jab server token generate karta hai, wo header aur payload ko combine karke apni secret key ke sath sign karta hai.
+Ye signature mathematically proof hoti hai ke token server ne hi banaya hai.
+
+Jab client dubara request bhejta hai token ke sath, server token verify karta hai.
+Wo dobara header + payload ko use karke same secret se signature generate karta hai aur dono compare karta hai.
+Agar dono signatures match karein aur expiry valid ho — token authentic aur valid hai.
+Agar signature mismatch kare ya token expire ho gaya ho — to request reject ho jati hai.
+
+Is tarah JWT ka signature part hi guarantee karta hai ke koi bhi token me chher-chaad nahi kar sakta.
+Ye poora system stateless hota hai, matlab server ko session store karne ki zarurat nahi padti.
+
+
+“Bearer ek token type hai jo server ko indicate karta hai ke request ke saath user ka token hai
+ aur is token se authentication ho rahi hai.”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
