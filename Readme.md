@@ -16,7 +16,9 @@
 - [Database Models](#database-models)
 - [Middleware](#middleware)
 - [Utilities](#utilities)
+- [Postman Tests](#postman-tests)
 - [Future Improvements](#future-improvements)
+- [Author](#author)
 
 ---
 
@@ -87,3 +89,51 @@ Taskify is designed to help teams and individuals:
 - **Security:** bcrypt, password complexity validation
 
 ---
+
+## **Postman Tests**
+
+You can use Postman to test all routes with different roles. Example tests:
+
+1. **Admin**
+
+   - Login
+   - Create Manager/User
+   - CRUD all tasks
+   - Delete users
+   - Fetch all users
+
+2. **Manager**
+
+   - Login
+   - Create User
+   - Create tasks for Users
+   - Update tasks they created
+   - Fetch tasks assigned to them or created by them
+
+3. **User**
+
+   - Login
+   - Fetch own tasks
+   - Update task status only
+
+4. **Reminder Test**
+   - Seed tasks with `dueDate` set near current date/time
+   - Use a cron job or task scheduler to trigger reminders
+   - Verify emails are sent using test email accounts (e.g., Mailtrap)
+
+> **Tip:** Use environment variables in Postman for `accessToken` and `refreshToken` for testing different roles.
+
+---
+
+## **Future Improvements**
+
+- WebSocket notifications for real-time task updates
+- Recurring tasks and subtasks
+- Improved UI with dashboard and analytics
+- Mobile app integration
+
+---
+
+## **Author**
+
+**Misbah Ilyas**

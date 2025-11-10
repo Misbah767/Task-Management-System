@@ -3,13 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
-import "./config/corn.js"; // cron jobs if any
+import "./config/corn.js";
 
 // Routes
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
-
+import reminderRoutes from "./routes/reminderRoutes.js";
 dotenv.config();
 const app = express();
 
@@ -45,6 +45,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/tasks", taskRoutes); // Task management routes
 
+app.use("/api/reminder", reminderRoutes);
 // ----------------- ERROR HANDLER -----------------
 app.use((err, req, res, next) => {
   console.error(err.stack);
