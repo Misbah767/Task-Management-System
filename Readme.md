@@ -123,17 +123,6 @@ You can use Postman to test all routes with different roles. Example tests:
 
 > **Tip:** Use environment variables in Postman for `accessToken` and `refreshToken` for testing different roles.
 
----
-
-## **Future Improvements**
-
-- WebSocket notifications for real-time task updates
-- Recurring tasks and subtasks
-- Improved UI with dashboard and analytics
-- Mobile app integration
-
----
-
 ## **Author**
 
 **Misbah Ilyas**
