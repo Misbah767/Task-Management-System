@@ -1,19 +1,17 @@
 export const sendSuccess = (res, statusCode, message, data = null) => {
-  const response = {
+  res.status(statusCode).json({
     success: true,
     message,
     data: data || {},
-  };
-  res.status(statusCode).json(response);
+  });
 };
 
 export const sendError = (res, statusCode, message, errors = null) => {
-  const response = {
+  res.status(statusCode).json({
     success: false,
     message,
     errors: errors || {},
-  };
-  res.status(statusCode).json(response);
+  });
 };
 
 export const sendPaginatedResponse = (
@@ -23,7 +21,7 @@ export const sendPaginatedResponse = (
   pagination,
   data
 ) => {
-  const response = {
+  res.status(statusCode).json({
     success: true,
     message,
     pagination: {
@@ -34,6 +32,5 @@ export const sendPaginatedResponse = (
       hasPrevious: pagination.hasPrevious,
     },
     data,
-  };
-  res.status(statusCode).json(response);
+  });
 };

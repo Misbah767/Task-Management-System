@@ -3,27 +3,34 @@ import {
   registerUser,
   loginUser,
   verifyAccountOtp,
-  resendAccountOtp,
   forgotPassword,
-  resendResetOtp,
   verifyResetOtp,
   resetPassword,
+  resendAccountOtp,
+  resendResetOtp,
   refreshAccessToken,
+  logout,
 } from "../controllers/authController.js";
+import {
+  registerValidation,
+  loginValidation,
+} from "../middleware/authValidator.js";
+import { userAuth } from "../middleware/userAuth.js";
 
 const router = express.Router();
 
-// Auth routes
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.post("/verify-account-otp", verifyAccountOtp);
-router.post("/resend-account-otp", resendAccountOtp);
+// ----------------- PUBLIC ROUTES -----------------
+router.post("/register", registerValidation, registerUser);
+router.post("/login", loginValidation, loginUser);
+router.post("/verify-account", verifyAccountOtp);
 router.post("/forgot-password", forgotPassword);
-router.post("/resend-reset-otp", resendResetOtp);
 router.post("/verify-reset-otp", verifyResetOtp);
 router.post("/reset-password", resetPassword);
+router.post("/resend-account-otp", resendAccountOtp);
+router.post("/resend-reset-otp", resendResetOtp);
 
-// Token refresh
-router.post("/refresh-token", refreshAccessToken);
+// ----------------- AUTHENTICATED ROUTES -----------------
+router.post("/refresh", refreshAccessToken);
+router.post("/logout", userAuth, logout);
 
 export default router;

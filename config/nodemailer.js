@@ -26,8 +26,8 @@ transporter.verify((err, success) => {
  * Send Email
  * @param {string} to - recipient email
  * @param {string} subject - email subject
- * @param {string} type - "otp" | "verified" | "reset" | "passwordChanged"
- * @param {object} data - { name, otp }
+ * @param {string} type - "otp" | "verified" | "reset" | "passwordChanged" | "reminder"
+ * @param {object} data - { name, otp, taskTitle, dueDate, role }
  * @param {boolean} forceSend - if true, send real email even in development
  */
 export async function sendEmail(
@@ -40,6 +40,7 @@ export async function sendEmail(
   try {
     let content = "";
 
+    // ----------------- SWITCH BY TYPE -----------------
     switch (type) {
       case "otp":
         content = `
@@ -55,7 +56,7 @@ export async function sendEmail(
       case "verified":
         content = `
           <p>Hi ${data.name || "User"},</p>
-          <p>Your Taskify account has been successfully verified ✅</p>
+          <p>Your account has been successfully verified ✅</p>
           <p>You can now login and start managing your tasks efficiently.</p>
         `;
         break;
@@ -79,10 +80,25 @@ export async function sendEmail(
         `;
         break;
 
+      case "reminder":
+        content = `
+          <p>Hi ${data.name || "User"},</p>
+          <p>This is a reminder that your task <b>${
+            data.taskTitle
+          }</b> is due at ${data.dueDate}.</p>
+          <p>Please complete it on time ✅</p>
+        `;
+        break;
+
       default:
         content = `<p>Hello ${
           data.name || "User"
         },</p><p>This is a notification from Taskify ✅</p>`;
+    }
+
+    // ----------------- ROLE-BASED CUSTOMIZATION -----------------
+    if (data.role) {
+      content += `<p style="font-size:12px; color:#555;">Role: ${data.role}</p>`;
     }
 
     const html = `
@@ -98,13 +114,13 @@ export async function sendEmail(
       </div>
     `;
 
-    // Development mode? log only
+    // ----------------- DEVELOPMENT MODE -----------------
     if (process.env.NODE_ENV === "development" && !forceSend) {
       console.log(`[DEV EMAIL] To: ${to}, Subject: ${subject}, HTML: ${html}`);
       return { success: true, messageId: "[DEV]" };
     }
 
-    // Real sending
+    // ----------------- SEND REAL EMAIL -----------------
     const info = await transporter.sendMail({
       from: `"Taskify" <${process.env.SENDER_EMAIL}>`,
       to,

@@ -1,0 +1,225 @@
+{
+  "info": {
+    "name": "Task Management System - Full Role Based Tests",
+    "_postman_id": "task-mgmt-full-rbac",
+    "description": "Postman collection for Task Management API with Admin, Manager, and User roles. Admin only logs in once and can create Manager/User tasks and users.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/login" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@example.com\",\"password\":\"Admin@123\"}"
+            }
+          }
+        },
+        {
+          "name": "Manager Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/login" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"manager@example.com\",\"password\":\"Manager@123\"}"
+            }
+          }
+        },
+        {
+          "name": "User Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/login" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"user@example.com\",\"password\":\"User@123\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - User Management",
+      "item": [
+        {
+          "name": "Create Manager",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Manager 1\",\"email\":\"manager@example.com\",\"password\":\"Manager@123\",\"role\":\"Manager\"}"
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Normal User\",\"email\":\"user@example.com\",\"password\":\"User@123\",\"role\":\"User\"}"
+            }
+          }
+        },
+        {
+          "name": "List All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users" }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/users/{{userId}}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tasks - CRUD",
+      "item": [
+        {
+          "name": "Admin - Create Task (Assign to Manager/User)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Admin Task\",\"description\":\"Task assigned by Admin\",\"assignedTo\":\"{{managerId}}\",\"dueDate\":\"2025-11-20\"}"
+            }
+          }
+        },
+        {
+          "name": "Manager - Create Task (Assign to User)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Manager Task\",\"description\":\"Task assigned by Manager\",\"assignedTo\":\"{{userId}}\",\"dueDate\":\"2025-11-20\"}"
+            }
+          }
+        },
+        {
+          "name": "Admin - Update Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks/{{taskId}}" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"Completed\",\"priority\":\"High\"}"
+            }
+          }
+        },
+        {
+          "name": "Manager - Update Own Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks/{{managerTaskId}}" },
+            "body": { "mode": "raw", "raw": "{\"status\":\"In Progress\"}" }
+          }
+        },
+        {
+          "name": "User - Update Own Task Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{userToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks/{{userTaskId}}" },
+            "body": { "mode": "raw", "raw": "{\"status\":\"Completed\"}" }
+          }
+        },
+        {
+          "name": "Admin - Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks/{{taskId}}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tasks - Fetch",
+      "item": [
+        {
+          "name": "Admin - List All Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks" }
+          }
+        },
+        {
+          "name": "Manager - List Assigned Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks" }
+          }
+        },
+        {
+          "name": "User - List Assigned Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{userToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks" }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,14 +1,14 @@
-// server.js
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
+import "./config/corn.js"; // cron jobs if any
 
 // Routes
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import todoRoutes from "./routes/todoRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -22,7 +22,6 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (Postman, curl)
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
         const msg = `CORS policy: This origin is not allowed - ${origin}`;
@@ -44,7 +43,13 @@ app.get("/", (req, res) => res.send("🚀 API Server running..."));
 // ----------------- MOUNT ROUTES -----------------
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/todos", todoRoutes);
+app.use("/api/tasks", taskRoutes); // Task management routes
+
+// ----------------- ERROR HANDLER -----------------
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: err.message });
+});
 
 // ----------------- START SERVER -----------------
 const PORT = process.env.PORT || 5000;
