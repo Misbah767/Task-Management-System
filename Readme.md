@@ -102,6 +102,8 @@ Taskify is designed to help teams and individuals:
 - **Validation:** Express-Validator
 - **Security:** bcrypt, password complexity validation
 
+---
+
 ## Setup & Installation
 
 ### 1️⃣ Clone the repository
@@ -147,10 +149,10 @@ Copy code
 npm run dev
 Server starts at http://localhost:5000
 
-5️⃣ Optional: Seed Admin
+5️⃣ Seed Admin
 bash
 Copy code
-npm run seed-admin
+npm run seed/seedAdmin
 
 POST /api/auth/register — Register new user
 
@@ -202,25 +204,7 @@ POST /api/reminders/trigger — Manually trigger reminders (Admin)
 
 CRON _/5 _ \* \* \* — Auto-check due tasks every 5 minutes
 
-🧭 Flow Summary
-
-npm run seed-admin — Create default Admin
-
-Admin login → /api/auth/login
-
-Admin creates Manager → /api/users
-
-Manager verifies OTP → /api/auth/verify-account
-
-Manager creates User → /api/users
-
-User verifies OTP → /api/auth/verify-account
-
-Manager creates task → /api/tasks
-
-User updates own task → /api/tasks/:id
-
-Cron auto-sends reminders → /api/reminders/trigger
+---
 
 Author
 
