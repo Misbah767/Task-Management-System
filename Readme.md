@@ -106,7 +106,6 @@ Taskify is designed to help teams and individuals:
 
 ### 1️⃣ Clone the repository
 
-```bash
 git clone https://github.com/Misbah767/Task-Management-System.git
 cd Task-Management-System
 2️⃣ Install dependencies
@@ -118,15 +117,21 @@ Create a .env file in the root directory:
 
 env
 Copy code
+
 # MongoDB
+
 MONGODB_URL="mongodb://localhost:27017"
+
 # Or Atlas
+
 MONGODB_URL="mongodb+srv://misbah:misbah321@cluster0.mr1wiiz.mongodb.net/"
 
 # JWT
+
 JWT_SECRET="mySuperSecretKey123"
 
 # SMTP / Email
+
 SMTP_HOST="smtp-relay.brevo.com"
 
 SMTP_PORT=587
@@ -134,7 +139,6 @@ SMTP_PORT=587
 SMTP_USER="9868e2001@smtp-brevo.com"
 
 SMTP_PASS="YdJhIT6psPb4HxNQ"
-
 
 4️⃣ Run the development server
 bash
@@ -217,11 +221,7 @@ Manager creates task → /api/tasks
 User updates own task → /api/tasks/:id
 
 Cron auto-sends reminders → /api/reminders/trigger
+
 Author
+
 Misbah Ilyas
-
-```
-
-```
-
-```
