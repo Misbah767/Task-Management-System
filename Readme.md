@@ -108,31 +108,35 @@ Taskify is designed to help teams and individuals:
 
 ### 1️⃣ Clone the repository
 
-git clone https://github.com/Misbah767/Task-Management-System.git
-cd Task-Management-System
+- git clone https://github.com/Misbah767/Task-Management-System.git
+- cd Task-Management-System
+
 2️⃣ Install dependencies
-bash
-Copy code
-npm install
-3️⃣ Configure environment variables
-Create a .env file in the root directory:
+
+- bash
+- Copy code
+- npm install
+
+  3️⃣ Configure environment variables
+
+- Create a .env file in the root directory:
 
 env
-Copy code
+-Copy code
 
-# MongoDB
+## MongoDB
 
 MONGODB_URL="mongodb://localhost:27017"
 
-# Or Atlas
+## Or Atlas
 
 MONGODB_URL="mongodb+srv://misbah:misbah321@cluster0.mr1wiiz.mongodb.net/"
 
-# JWT
+## JWT
 
 JWT_SECRET="mySuperSecretKey123"
 
-# SMTP / Email
+## SMTP / Email
 
 SMTP_HOST="smtp-relay.brevo.com"
 
@@ -202,7 +206,7 @@ Reminders
 
 POST /api/reminders/trigger — Manually trigger reminders (Admin)
 
-CRON _/5 _ \* \* \* — Auto-check due tasks every 5 minutes
+CRON \_/5 Auto-check due tasks every 5 minutes
 
 ---
 
