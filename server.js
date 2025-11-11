@@ -43,8 +43,7 @@ app.get("/", (req, res) => res.send("🚀 API Server running..."));
 // ----------------- MOUNT ROUTES -----------------
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/tasks", taskRoutes); // Task management routes
-
+app.use("/api/tasks", taskRoutes);
 app.use("/api/reminder", reminderRoutes);
 // ----------------- ERROR HANDLER -----------------
 app.use((err, req, res, next) => {
