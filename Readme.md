@@ -108,7 +108,6 @@ Taskify is designed to help teams and individuals:
 
 ### 1️⃣ Clone the repository
 
-```bash
 git clone https://github.com/Misbah767/Task-Management-System.git
 cd Task-Management-System
 2️⃣ Install dependencies
@@ -120,9 +119,13 @@ Create a .env file in the root directory and add:
 
 env
 Copy code
+
 # MongoDB
-MONGODB_URL="mongodb://localhost:27017"  # Local MongoDB
-# MONGODB_URL="mongodb+srv://misbah:misbah321@cluster0.mr1wiiz.mongodb.net/"  # Atlas MongoDB
+
+MONGODB_URL="mongodb://localhost:27017" # Local MongoDB
+
+# MONGODB_URL="mongodb+srv://misbah:misbah321@cluster0.mr1wiiz.mongodb.net/" # Atlas MongoDB
+
 JWT_SECRET="mySuperSecretKey123"
 SMTP_HOST="smtp-relay.brevo.com"
 SMTP_PORT=587
@@ -138,72 +141,72 @@ Server will start at: http://localhost:5000
 5️⃣ (Optional) Seed Admin
 npm run seed-admin
 
-
 Creates a default Admin from .env values.
 
 🌍 Environment Variables
-Variable	Description
-PORT	App running port
-MONGO_URI	MongoDB connection string
-JWT_SECRET	Secret key for JWT
-SMTP_HOST	Email service host
-SMTP_PORT	SMTP port (default 587)
-SMTP_USER	SMTP email
-SMTP_PASS	App password
-SMTP_SECURE	true/false
+Variable Description
+PORT App running port
+MONGO_URI MongoDB connection string
+JWT_SECRET Secret key for JWT
+SMTP_HOST Email service host
+SMTP_PORT SMTP port (default 587)
+SMTP_USER SMTP email
+SMTP_PASS App password
+SMTP_SECURE true/false
 🔐 API Endpoints
- Authentication
+Authentication
 
- Run once to create default Admin
+Run once to create default Admin
 
 npm run seed-admin
 
-Method	Endpoint	Description	Access
-POST	/api/auth/register	Register new user( just for user)
-POST	/api/auth/login	Login and receive JWT token	Public
-POST	/api/auth/verify-account	Verify account using OTP	Public
-POST	/api/auth/forgot-password	Send OTP for password reset	Public
-POST	/api/auth/verify-reset-otp	Verify OTP for password reset	Public
-POST	/api/auth/reset-password	Reset password after OTP	Public
-POST	/api/auth/resend-account-otp	Resend OTP for account verification	Public
-POST	/api/auth/resend-reset-otp	Resend OTP for password reset	Public
-POST	/api/auth/refresh	Get new access token	Authenticated
-POST	/api/auth/logout	Logout and invalidate token	Authenticated
- Users
-Method	Endpoint	Description	Access
-GET	/api/users	Get all users	Admin
-GET	/api/users/:id	Get user by ID	Admin / Self
-POST	/api/users	Create user (Admin → Manager / Manager → User)	Admin / Manager
-PATCH	/api/users/:id	Update user details	Admin / Self
-DELETE	/api/users/:id	Delete user	Admin
+Method Endpoint Description Access
+POST /api/auth/register Register new user( just for user)
+POST /api/auth/login Login and receive JWT token Public
+POST /api/auth/verify-account Verify account using OTP Public
+POST /api/auth/forgot-password Send OTP for password reset Public
+POST /api/auth/verify-reset-otp Verify OTP for password reset Public
+POST /api/auth/reset-password Reset password after OTP Public
+POST /api/auth/resend-account-otp Resend OTP for account verification Public
+POST /api/auth/resend-reset-otp Resend OTP for password reset Public
+POST /api/auth/refresh Get new access token Authenticated
+POST /api/auth/logout Logout and invalidate token Authenticated
+Users
+Method Endpoint Description Access
+GET /api/users Get all users Admin
+GET /api/users/:id Get user by ID Admin / Self
+POST /api/users Create user (Admin → Manager / Manager → User) Admin / Manager
+PATCH /api/users/:id Update user details Admin / Self
+DELETE /api/users/:id Delete user Admin
 Tasks
-Method	Endpoint	Description	Access
-POST	/api/tasks	Create task	Admin / Manager
-GET	/api/tasks	Get all tasks (filtered by role)	Admin / Manager / User
-GET	/api/tasks/:id	Get task by ID	Assigned user / Admin
-PUT	/api/tasks/:id	Update task (title, status, priority)	Admin / Manager / Assigned user
-DELETE	/api/tasks/:id	Delete task	Admin
+Method Endpoint Description Access
+POST /api/tasks Create task Admin / Manager
+GET /api/tasks Get all tasks (filtered by role) Admin / Manager / User
+GET /api/tasks/:id Get task by ID Assigned user / Admin
+PUT /api/tasks/:id Update task (title, status, priority) Admin / Manager / Assigned user
+DELETE /api/tasks/:id Delete task Admin
 ⏰ Reminders
-Type	Endpoint / Schedule	Description	Access
-POST	/api/reminders/trigger	Manually trigger reminders	Admin
-CRON	*/5 * * * *	Auto-check due tasks every 5 mins and send reminder emails	System
+Type Endpoint / Schedule Description Access
+POST /api/reminders/trigger Manually trigger reminders Admin
+CRON _/5 _ \* \* \* Auto-check due tasks every 5 mins and send reminder emails System
 
- Uses Node-Cron + Nodemailer for automatic email notifications.
+Uses Node-Cron + Nodemailer for automatic email notifications.
 
 🧭 Flow Summary
-Step	Action	Description
-1️⃣	npm run seed-admin	Create default Admin
-2️⃣	Admin login	/api/auth/login
-3️⃣	Admin creates Manager	/api/users
-4️⃣	Manager verifies OTP	/api/auth/verify-account
-5️⃣	Manager creates User	/api/users
-6️⃣	User verifies OTP	/api/auth/verify-account
-7️⃣	Manager creates task	/api/tasks
-8️⃣	User updates own task	/api/tasks/:id
-9️⃣	Cron auto-sends reminders	/api/reminders/trigger (manual optional)
+Step Action Description
+1️⃣ npm run seed-admin Create default Admin
+2️⃣ Admin login /api/auth/login
+3️⃣ Admin creates Manager /api/users
+4️⃣ Manager verifies OTP /api/auth/verify-account
+5️⃣ Manager creates User /api/users
+6️⃣ User verifies OTP /api/auth/verify-account
+7️⃣ Manager creates task /api/tasks
+8️⃣ User updates own task /api/tasks/:id
+9️⃣ Cron auto-sends reminders /api/reminders/trigger (manual optional)
 
- Author
+Author
 Misbah Ilyas
 
+```
 
 ```
