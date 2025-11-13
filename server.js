@@ -15,8 +15,8 @@ const app = express();
 
 // ----------------- CORS CONFIG -----------------
 const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  "https://taskify-app-ten.vercel.app", // Vercel deployment
+  "http://localhost:5173",
+  "https://taskify-app-ten.vercel.app",
 ];
 
 app.use(

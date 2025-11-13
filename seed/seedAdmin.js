@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import connectDB from "../config/mongodb.js"; // tumhara connectDB file
+import connectDB from "../config/mongodb.js";
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 
@@ -9,7 +9,7 @@ const seedAdmin = async () => {
     await connectDB();
 
     const adminEmail = "admin@example.com";
-    const adminPassword = "Admin@123"; // plain password
+    const adminPassword = "Admin@123";
 
     const existingAdmin = await User.findOne({ email: adminEmail });
 

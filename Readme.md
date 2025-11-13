@@ -130,11 +130,11 @@ MONGODB_URL="mongodb://localhost:27017"
 
 ## Or Atlas
 
-MONGODB_URL="mongodb+srv://misbah:misbah321@cluster0.mr1wiiz.mongodb.net/"
+MONGODB_URL=mongodb+srv://<username>:<password>@<cluster-url>/<db-name>
 
 ## JWT
 
-JWT_SECRET="mySuperSecretKey123"
+JWT_SECRET=<your-secret-key>
 
 ## SMTP / Email
 
@@ -142,9 +142,9 @@ SMTP_HOST="smtp-relay.brevo.com"
 
 SMTP_PORT=587
 
-SMTP_USER="9868e2001@smtp-brevo.com"
+SMTP_USER=<your-smtp-user>
 
-SMTP_PASS="YdJhIT6psPb4HxNQ"
+SMTP_PASS=<your-smtp-password>
 
 4️⃣ Run the development server
 bash
